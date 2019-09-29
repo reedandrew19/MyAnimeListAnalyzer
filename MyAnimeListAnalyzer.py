@@ -10,20 +10,31 @@ seasons = ['winter', 'spring', 'summer', 'fall']
 
 
 def main():
-    for year in range(2017, 2019):
-        for season in seasons:
-            show_count = 0
+    for year in range(1970, 2019):
+        yearly_show_count = 0
+        yearly_show_total = 0
 
-            print(str(year) + ' ' + str(season) + ': ')
+        for season in seasons:
+            seasonal_show_count = 0
+            seasonal_show_total = 0
+
+            #print(str(year) + ' ' + str(season) + ': ')
             shows = getShows(year, season)
             for show in shows:
                 if isValidShow(show):
-                    printShowInfo(show)
+                    #printShowInfo(show)
 
-                    show_count += 1
+                    seasonal_show_count += 1
+                    seasonal_show_total += show['score']
 
-            print(show_count)
+            yearly_show_count += seasonal_show_count
+            yearly_show_total += seasonal_show_total
+
             rateLimitBatchRequests()
+            print(season + ' ' + str(year) + ': ' + str(seasonal_show_total / seasonal_show_count))
+
+
+        print(str(year) + ': ' + str(yearly_show_total / yearly_show_count))
 
 
 def getShows(year, season):
